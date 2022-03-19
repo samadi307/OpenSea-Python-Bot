@@ -23,6 +23,10 @@ optional arguments:
 
 ```
 
+### NFT Collection:
+To input the exact nft name, navigate to the NFT collection and copy the value as shown below:
+![alt text](https://github.com/OpenSeaSnipers/OpenSea-Python-Bot/blob/main/nft-name.png?raw=true)
+
 ## Continous Monitor Mode
 The continous monitor mode allow you to look at an NFT continously and alert in the case the NFT is below floor price. If the value is below 50% floor then an automatic buy can be triggered. Recently OpenSea has made it difficult for sales bot to work by rate limiting API calls. The code has been altered to add delays and use new techniques to bypass this. With that, the bot will function smoothly but at times OpenSea can crash so keep an eye out. The parameters `--nft`, `--mnemonic` & `--wallet` are mandatory to make the call.
 ```
