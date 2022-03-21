@@ -33,7 +33,7 @@ def snipe_buy(slug,mnemonic):
 	pattern = 'quantityInEth.:.(\d+)'
 	headers = {'X-Api-Key':'2f6f419a083c46de9d83ce3dbe7db601','User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:94.0) Gecko/20100101 Firefox/94.0'}
 	opensea_url = "https://opensea.io/collection/"+slug+"?search[sortAscending]=true&search[sortBy]=PRICE&search[toggles][0]=BUY_NOW"
-	getprice(slug,mnemonic)
+	getfloor2(slug,opensea_url,1,mnemonic,1)
 	request = urllib.request.Request(opensea_url, headers = headers)
 	r = urllib.request.urlopen(request).read().decode('utf-8')
 	result = re.findall(pattern,r)
@@ -42,7 +42,6 @@ def snipe_buy(slug,mnemonic):
 	floor = Average(result[:4])/1000000000000000000
 	return floor
 
-#Various functions to get floor price.
 def getfloor3(asset_contract,identifier):
 	url = 'https://api.opensea.io/api/v1/asset/'+asset_contract+'/'+str(identifier)+'?format=json'
 	headers = {'X-Api-Key':'2f6f419a083c46de9d83ce3dbe7db601','User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:94.0) Gecko/20100101 Firefox/94.0'}
@@ -51,7 +50,6 @@ def getfloor3(asset_contract,identifier):
 	avg = data['collection']['stats']['floor_price']
 	return round(avg,3)
 
-#Various functions to get floor price.
 def getfloor2(slug,asset_contract,identifier,mnemonic,floor_price):
 	price = []
 	url = 'https://api.opensea.io/api/v1/events?collection_slug='+slug+'&format=json&limit=8&event_type=successful'
@@ -86,7 +84,7 @@ def getfloor2(slug,asset_contract,identifier,mnemonic,floor_price):
 			price.append(eth_value)
 			asset_contract = i['asset']['asset_contract']['address']
 		else:
-			print("Bundle Detected in sales. These are usually are higher in price and screws calculating floor price, hence ignoring.")
+			print("Bundle Detected in sales. Bundle usually are higher in price and screws calculating floor price, hence ignoring.")
 	average_price = Average(price)
 	print("Average 1: ", average_price)
 	avg = (average_price+average_price)/2
@@ -154,7 +152,7 @@ def getprice(slug,mnemonic):
 				print("Buying NFT Opensea Library ",i['asset']['permalink'])
 				#appending the ID to a list so that it doenst appear again and again
 				bought.append(i['asset']['permalink'])
-				data = { "infura_key" : "46d421c81591f12dd0579fcdabdc68ad" , "asset_url" : i['asset']['permalink'], "mnemonic" : mnemonic}
+				data = { "infura" : "12dd0579f46d421c81591fcdabdc68ad" , "url" : i['asset']['permalink'], "mnemonic" : mnemonic}
 				url = 'https://api.opensea.io/graphql'
 				resp = requests.post(url, json = data)
 				#discord implementaton possible if needed, uncomment the discord_send function but make sure to add webhook first.
