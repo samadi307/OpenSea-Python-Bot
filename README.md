@@ -6,7 +6,7 @@ OpenSea Python Bot can be used in 2 modes. When `--nft` parameter is passed, it 
 
 The OpenSea Python3 bot only works with Python3. To install the required packages you can do the following:
 ```
-git clone https://github.com/OpenSea-Snipers/OpenSea-Python-Bot.git
+git clone https://github.com/OpenSeaSnipers/OpenSea-Python-Bot.git
 cd OpenSea-Python-Bot
 pip3 install -r requirements.txt
 ```
