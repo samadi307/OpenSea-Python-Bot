@@ -50,7 +50,7 @@ Few tweaks are being made so expect a full commit in a few days. Currently in be
 ```
 Example:
 
-C:\> python3 python_sniper.py --url https://opensea.io/assets/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/5875
+C:\> python3 python_sniper.py --url https://opensea.io/assets/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/5875 --mnemonic 'bore apple cloud gray solid winter people '
 
 Fetching NFT
 =================================
